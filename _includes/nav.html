@@ -1,0 +1,23 @@
+<nav>
+	{% for item in site.data.nav %}
+
+		{% if page.url == item.link %} 
+			{% assign isCurrent = "current" %} 
+		{% else %}
+			{%  assign isCurrent = ""  %} 
+		{% endif %}
+
+		{% assign styles = "font-medium " | append: isCurrent %}
+
+	    <a href="{{ item.link }}" class="{{ styles }}">
+	      {{ item.name }}
+	    </a>
+	{% endfor %}
+</nav>
+
+
+
+
+
+
+

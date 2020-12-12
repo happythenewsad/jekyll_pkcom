@@ -1,0 +1,33 @@
+
+paginate: 4
+plugins: 
+  - jekyll-paginate
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-redirect-from
+
+paginate_path: "/blog/page:num"
+
+mixpanel: true
+
+collections:
+  fiction_posts:
+    output: true
+
+author: Peter William Kong
+
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "pk"
+
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+
+# values are scoped to the path matcher, with "" matching all files
+# 'posts' is a special value; you can't create custom values

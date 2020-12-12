@@ -1,0 +1,90 @@
+
+body {
+  /* page-wrap */ }
+  body #page-wrap {
+    /*border: solid 3px black;*/
+    width: 800px;
+    margin: 40px auto 60px;
+    padding: 0px 20px 0px;
+    /*line-height: 24px;*/ }
+    body #page-wrap a {
+      text-decoration: none;
+      border-bottom: 1px dotted #999999; }
+    body #page-wrap a:hover {
+      border-bottom-style: solid;
+      color: black; }
+    body #page-wrap .clear {
+      clear: both; }
+    body #page-wrap h1#title {
+      font: 22px Helvetica, Sans-Serif;
+      font-weight: bold;
+      padding: 0 26px 0 0;
+      height: 100px;
+      float: left;
+      margin: 0 0 16px 0;
+      padding: 0 0 16px 0;
+      font-size: 48px;
+      letter-spacing: -1px; }
+    body #page-wrap #contact {
+      font: 14px Verdana, Serif;
+      letter-spacing: -1px;
+      float: right; }
+      body #page-wrap #contact a {
+        color: #000000; }
+      body #page-wrap #contact .key {
+        font: 22px Helvetica, Sans-Serif;
+        font-weight: bold;
+        color: #999999; }
+    body #page-wrap dl dt {
+      font: 22px Helvetica, Sans-Serif;
+      font-weight: bold;
+      text-align: right;
+      width: 130px;
+      float: left;
+      border-right: 1px solid #999999;
+      color: #999999;
+      padding: 0 26px 0 0;
+      height: 100px; }
+    body #page-wrap dl dd {
+      width: 600px;
+      float: right; }
+
+
+      body #page-wrap dl dd h2, body #page-wrap dl dd .projecttitle  {
+        font: 22px Helvetica, Sans-Serif;
+        font-weight: bold;
+        margin: 2px 0 6px 0;
+        position: relative; }
+        body #page-wrap dl dd h2 span {
+          font: 14px Verdana, Serif;
+          letter-spacing: -1px;
+          margin: 4px 0 6px 0;
+          float: right;
+          /*position: absolute;*/
+          font-style: italic;
+          color: #999999; }
+      body #page-wrap dl dd .clear {
+        float: none;
+        margin: 0;
+        height: 15px; }
+      body #page-wrap dl dd p, body #page-wrap dl dd ul, body #page-wrap dl dd .projecttext{
+        font: 14px Verdana, Serif;
+        letter-spacing: -1px; }
+      body #page-wrap dl dd .projectdiv  {
+        margin: 0 0 16px 0px;
+      }
+      body #page-wrap dl dd ul{
+        margin: 0 0 32px 17px; }
+
+        body #page-wrap dl dd ul.noindent{
+        margin: 0 0 32px -25px; }
+
+        body #page-wrap dl dd ul li{
+          padding: 5px 0 5px 0; }
+        body #page-wrap dl dd ul .accent {
+          font: 22px Helvetica, Sans-Serif;
+          font-weight: bold;
+          font-size: 14px;
+          color: #999999; }
+
+

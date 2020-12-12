@@ -1,0 +1,35 @@
+.tile {
+	border-radius: var(--default-border-radius);
+}
+
+.fiction-wrapper {
+	@extend .tile;
+	/*
+	border-color: var(--oc-gray-8);
+	border-style: solid;
+	border-width: .2rem;
+	*/
+	background-color: var(--oc-gray-8);
+	padding: 1rem;
+	font-family: var(--heading-font);
+
+  .typetag-container {
+  	float: right;
+	.typetag {
+		@extend .tile;
+		background-color: var(--link-color);
+		font-family: var(--body-font);
+		padding: .5rem;
+		margin-left: 1rem;
+	}
+	padding-left: 1rem;
+  }
+}
+
+.fiction-wrapper > div {
+	padding: 1rem;
+}
+
+.title {
+	font-size: 2em;
+}

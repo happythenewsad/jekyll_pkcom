@@ -1,0 +1,22 @@
+---
+layout: default
+title: Fiction
+
+---
+
+<div class="fiction-wrapper tile">
+  {% for fiction in site.fiction_posts %}
+  	<div>
+	    <span class="title"><a href="{{ fiction.url }}">{{ fiction.title }}</a></span>
+	 	<span class="typetag-container">
+	      {% for tag in fiction.tags %}
+	        <span class="typetag">{{tag}}</span>
+	      {% endfor %}
+	    </span>
+	</div>
+
+
+  {% endfor %}
+</div>
+
+<div class="push"></div>
