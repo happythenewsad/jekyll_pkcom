@@ -1,7 +1,9 @@
-#jekyll_pkcom
+# jekyll_pkcom
 
-This is my personal blog, deployed via [terraform-static-site](https://github.com/happythenewsad/terraform-static-site). Feel free to use it, just replace the content in `_posts` with your own.
 
+This is my [personal blog](peterkong.com), deployed via [terraform-static-site](https://github.com/happythenewsad/terraform-static-site). Feel free to use it, just replace the content in `_posts` with your own.
+
+![Image of blog](screenshot.png)
 
 ## setup / installation
 - `bundle`
@@ -11,3 +13,4 @@ This is my personal blog, deployed via [terraform-static-site](https://github.co
 
 ## production build
 - `JEKYLL_ENV=product bundle exec`
+
