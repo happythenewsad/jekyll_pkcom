@@ -12,5 +12,5 @@ This is my [personal blog](peterkong.com), deployed via [terraform-static-site](
 - `bundle exec jekyll serve`
 
 ## production build
-- `JEKYLL_ENV=product bundle exec`
+- `JEKYLL_ENV=production bundle exec jekyll build`
 
