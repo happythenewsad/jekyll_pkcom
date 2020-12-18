@@ -2,20 +2,33 @@
 title: The new static web stack made easy with Terraform and Jekyll over TLS
 ---
 
-## Motivation
+## TL;DR
+Terraform is great; I provide a Terraform recipe that's easy to get started with, along with some things I learned along the way.
 
+## Intended Audience
+Software developers who are interested in trying out Terraform to manage cloud infrastructure.
+
+## Motivation
 Until recently, my old web property languished on a past end-of-life Rails Heroku stack. It was slow to build and served over plain HTTP. Time for an upgrade.
 
-I taught myself Terraform and Jekyll by migrating peterkong.com to this new stack. I'm convinced it's an ideal configuration for modern static sites: S3-backed CloudFront offers blazing fast page loads, SSL/TLS configuration is one-and-done, and your cloud architecture is expressed in code, so you never need click through tedious AWS interfaces trying to remember how you configured a firewall setting or bucket rule. And you have complete control over every part of your stack.
+I taught myself Terraform (and Jekyll) by migrating to this new stack. I'm convinced it's an ideal configuration for modern static sites: S3-backed CloudFront offers blazing fast page loads, SSL/TLS configuration is one-and-done, and your cloud architecture is expressed in code, so you never need click through tedious AWS interfaces trying to remember how you configured a firewall setting or bucket rule. And you have complete control over every part of your stack.
 
 I've captured my learnings in two public repos: [terraform-static-site](https://github.com/happythenewsad/terraform-static-site) and [jekyll-pkcom](https://github.com/happythenewsad/jekyll_pkcom)
 
-Feel free to jump right in. The rest of this post will cover some more detailed thoughts and observations on working with Terraform. Code snippets reference [terraform-static-site](https://github.com/happythenewsad/terraform-static-site).
+Feel free to start there. The rest of this post will cover some more detailed thoughts and observations on working with Terraform. Code snippets reference [terraform-static-site](https://github.com/happythenewsad/terraform-static-site).
 
 ## Terraform's tactical merits
-Terraform expresses cloud configurations (i.e. servers, load balancers, datastores, permissions) in code. This is super great because non-trivial cloud configurations become complex very quickly. Depending on your cloud provider\*, cloud configurations may not be versioned, or not versioned in an easily readable way. A team member may change a configuration and you may not realize it until something breaks. If you adhere to Terraform best practices, every single aspect of your cloud configuration will be versioned and controlled, making infrastructure debugging and rollbacks straightforward. 
+Terraform expresses cloud infrastructure (i.e. servers, load balancers, datastores, permissions) in code. This is super great because non-trivial cloud configurations become complex very quickly. 
 
-Terraform deployments are idempotent, so existing architecture is preserved if reflects what's in your Terraform specification.
+Cloud providers (e.g. AWS, Azure) provide browser UIs out of the box for managing infrastructure. These can be helpful when starting out, but quickly become cumbersome.
+
+Here are a few scenarios that illustrate problems I have encountered with cloud infrastructure management before Terraform:
+
+- A teammate changes a firewall rule, cutting communication between a load balancer and a server. Identifying the root cause takes minutes rather than seconds, because infrastructure configurations are not versioned in a central place. After identifying the bad firewall rule, uncertainty lingers - have other misconfigurations occurred which may also be impacting production?
+
+- You want to set up a new CDN distribution that reads from various S3 buckets. To do this, you need to copy and paste a list of S3 bucket names into an AWS web form to tell the new CDN distribution where to read from.
+
+Terraform solves issues like these by deploying your cloud infrastucture from a versioned template files. Terraform deployments are idempotent, so existing architecture is preserved if it reflects what's in your Terraform specification.
 
 ## Notes and learnings
 
@@ -25,7 +38,7 @@ I found it helpful to start with a minimal working Terraform configuration (say,
 
 Let’s look at [terraform-static-site](https://github.com/happythenewsad/terraform-static-site): it has a single Terraform directory, `s3`, with just 3 files inside. Yep, that's all you need. Like Git, Terraform only cares about the directory you tell it to care about. If you run `cd s3 && terraform init .`, Terraform will start managing artifacts within `s3/`, and only `s3/`. Terraform can manage multiple directories through Terraform modules, but those are out of the scope of this minimal example.
 
-Let's take a quick look `s3.tf`:
+`s3.tf`:
 
 	terraform {
 		...
@@ -80,7 +93,7 @@ Some recipes will specify
 which causes CloudFront to raise HTTP 504 errors in my experience. In general, it's handy to enable an S3 logging bucket when debugging S3 <-> CloudFront issues.
 
 ### custom domain / cert
-[terraform-static-site](https://github.com/happythenewsad/terraform-static-site) is configured to use a custom domain, so your web property can be accessed via a normal domain instead of xyz.cloudfront.net. Doing this in AWS requires a custom SSL/TLS cert. You need out-of-band approval for a cert. Log into the [AWS Certificate Manager](https://console.aws.amazon.com/acm) to create one, then add it's ARN in `terraform.tvars`. If you prefer to host domains outside of AWS's Route53 service like I do, you'll also need to follow [this CNAMEing procedure](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html). Verifying ownership of your domain is easy, but manual and out-of-band. It took about 10 minutes for AWS to recognize ownership for my domain after I updated CNAME records through my 3rd party DNS service.
+[terraform-static-site](https://github.com/happythenewsad/terraform-static-site) is configured to use a custom domain, so your web property can be accessed via a normal domain instead of xyz.cloudfront.net. Doing this in AWS requires a custom SSL/TLS cert. You need out-of-band approval for a cert. Log into the [AWS Certificate Manager](https://console.aws.amazon.com/acm) to create one, then add its ARN in `terraform.tvars`. If you prefer to host domains outside of AWS's Route53 service like I do, you'll also need to follow [this CNAMEing procedure](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html). Verifying ownership of your domain is easy, but manual and out-of-band. It took about 10 minutes for AWS to recognize ownership for my domain after I updated CNAME records through my 3rd party DNS service.
 
 ### 503 gotcha
 If you're getting 503's from CloudFront, it may be because you need a `custom_origin_config` within your `aws_cloudfront_distribution` resource block. Luckily, [terraform-static-site](https://github.com/happythenewsad/terraform-static-site)'s configuration should work out of the box.
