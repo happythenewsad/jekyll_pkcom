@@ -8,7 +8,7 @@ title: Blog
   {% for post in paginator.posts %}
     <li>
       <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
-      {{ post.excerpt }}
+      <hr>
     </li>
   {% endfor %}
 </ul>
